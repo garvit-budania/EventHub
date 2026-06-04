@@ -1,22 +1,39 @@
 # EventHub
 
-A role-based Event & Ticketing Management System built using Java Swing, JDBC, and MySQL.
+A desktop-based Event & Ticketing Management System built using Java Swing, JDBC, and MySQL.
 
 ## Features
 
 - User Registration & Login
-- Event Creation
+- Role-Based Access Control
+- Event Creation & Management
 - Ticket Booking
 - Wallet-Based Payments
 - Booking History
+- Transaction Tracking
 
-## Technologies Used
+## Tech Stack
 
 - Java
-- Swing
+- Java Swing
 - JDBC
 - MySQL
+- Git & GitHub
+
+## Project Structure
+
+EventHub
+│
+├── model
+├── dao
+├── service
+├── ui
+└── util
 
 ## Status
 
-Project Under Development
+🚧 Under Development
+
+## Author
+
+Garvit Budania
