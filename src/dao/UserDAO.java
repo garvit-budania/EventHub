@@ -41,7 +41,11 @@ public class UserDAO {
             return false;
         }
     }
-    public User loginUser(String username, String password) {
+
+    public User loginUser(
+            String username,
+            String password
+    ) {
 
         String query =
                 "SELECT * FROM users " +
@@ -62,7 +66,7 @@ public class UserDAO {
             ResultSet rs =
                     pstmt.executeQuery();
 
-            if(rs.next()) {
+            if (rs.next()) {
 
                 return new User(
                         rs.getInt("user_id"),
@@ -79,5 +83,39 @@ public class UserDAO {
         }
 
         return null;
+    }
+
+    public boolean updateWallet(
+            int userId,
+            double newBalance
+    ) {
+
+        String query =
+                "UPDATE users " +
+                "SET wallet_balance = ? " +
+                "WHERE user_id = ?";
+
+        try {
+
+            Connection conn =
+                    DBConnection.getConnection();
+
+            PreparedStatement pstmt =
+                    conn.prepareStatement(query);
+
+            pstmt.setDouble(1, newBalance);
+            pstmt.setInt(2, userId);
+
+            int rowsAffected =
+                    pstmt.executeUpdate();
+
+            return rowsAffected > 0;
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return false;
+        }
     }
 }
