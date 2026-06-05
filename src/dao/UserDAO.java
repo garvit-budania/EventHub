@@ -37,7 +37,6 @@ public class UserDAO {
         } catch (Exception e) {
 
             e.printStackTrace();
-
             return false;
         }
     }
@@ -115,6 +114,34 @@ public class UserDAO {
 
             e.printStackTrace();
 
+            return false;
+        }
+    }
+
+    public boolean updateWallet(
+            Connection conn,
+            int userId,
+            double newBalance
+    ) {
+
+        String query =
+                "UPDATE users " +
+                "SET wallet_balance = ? " +
+                "WHERE user_id = ?";
+
+        try {
+
+            PreparedStatement pstmt =
+                    conn.prepareStatement(query);
+
+            pstmt.setDouble(1, newBalance);
+            pstmt.setInt(2, userId);
+
+            return pstmt.executeUpdate() > 0;
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
             return false;
         }
     }

@@ -1,100 +1,70 @@
-import dao.BookingDAO;
 import dao.EventDAO;
 import dao.UserDAO;
 import model.Event;
 import model.User;
+import service.BookingService;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        UserDAO userDAO = new UserDAO();
-        EventDAO eventDAO = new EventDAO();
-        BookingDAO bookingDAO = new BookingDAO();
+        UserDAO userDAO =
+                new UserDAO();
 
-        User user =
+        EventDAO eventDAO =
+                new EventDAO();
+
+        BookingService bookingService =
+                new BookingService();
+
+        User userA =
                 userDAO.loginUser(
-                        "GB",
+                        "UserA",
                         "123"
                 );
 
-        if(user == null) {
-
-            System.out.println(
-                    "User not found!"
-            );
-
-            return;
-        }
+        User userB =
+                userDAO.loginUser(
+                        "UserB",
+                        "123"
+                );
 
         Event event =
-                eventDAO.getAllEvents().get(0);
+                eventDAO.getAllEvents().get(1);
 
-        int tickets = 2;
+        Thread t1 =
+                new Thread(() -> {
 
-        double totalCost =
-                tickets *
-                event.getTicketPrice();
+                    boolean success =
+                            bookingService.bookTicket(
+                                    userA,
+                                    event,
+                                    1
+                            );
 
-        if(user.getWalletBalance() < totalCost) {
+                    System.out.println(
+                            "UserA Booking: "
+                                    + success
+                    );
+                });
 
-            System.out.println(
-                    "Insufficient Wallet Balance!"
-            );
+        Thread t2 =
+                new Thread(() -> {
 
-            return;
-        }
+                    boolean success =
+                            bookingService.bookTicket(
+                                    userB,
+                                    event,
+                                    1
+                            );
 
-        if(event.getAvailableSeats() < tickets) {
+                    System.out.println(
+                            "UserB Booking: "
+                                    + success
+                    );
+                });
 
-            System.out.println(
-                    "Not Enough Seats Available!"
-            );
-
-            return;
-        }
-
-        double newBalance =
-                user.getWalletBalance()
-                - totalCost;
-
-        int newSeats =
-                event.getAvailableSeats()
-                - tickets;
-
-        boolean walletUpdated =
-                userDAO.updateWallet(
-                        user.getUserId(),
-                        newBalance
-                );
-
-        boolean seatsUpdated =
-                eventDAO.updateSeats(
-                        event.getEventId(),
-                        newSeats
-                );
-
-        boolean bookingCreated =
-                bookingDAO.createBooking(
-                        user.getUserId(),
-                        event.getEventId(),
-                        tickets,
-                        totalCost
-                );
-
-        if(walletUpdated &&
-           seatsUpdated &&
-           bookingCreated) {
-
-            System.out.println(
-                    "Booking Successful!"
-            );
-
-        } else {
-
-            System.out.println(
-                    "Booking Failed!"
-            );
-        }
+        t1.start();
+        t2.start();
     }
 }

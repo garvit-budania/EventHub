@@ -32,10 +32,7 @@ public class EventDAO {
             pstmt.setInt(5, event.getTotalSeats());
             pstmt.setInt(6, event.getAvailableSeats());
 
-            int rowsAffected =
-                    pstmt.executeUpdate();
-
-            return rowsAffected > 0;
+            return pstmt.executeUpdate() > 0;
 
         } catch (Exception e) {
 
@@ -87,6 +84,47 @@ public class EventDAO {
         return events;
     }
 
+    public Event getEventById(
+            Connection conn,
+            int eventId
+    ) {
+
+        String query =
+                "SELECT * FROM events " +
+                "WHERE event_id = ? " +
+                "FOR UPDATE";
+
+        try {
+
+            PreparedStatement pstmt =
+                    conn.prepareStatement(query);
+
+            pstmt.setInt(1, eventId);
+
+            ResultSet rs =
+                    pstmt.executeQuery();
+
+            if (rs.next()) {
+
+                return new Event(
+                        rs.getInt("event_id"),
+                        rs.getString("event_name"),
+                        rs.getString("event_date"),
+                        rs.getString("venue"),
+                        rs.getDouble("ticket_price"),
+                        rs.getInt("total_seats"),
+                        rs.getInt("available_seats")
+                );
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public boolean updateSeats(
             int eventId,
             int newAvailableSeats
@@ -108,15 +146,39 @@ public class EventDAO {
             pstmt.setInt(1, newAvailableSeats);
             pstmt.setInt(2, eventId);
 
-            int rowsAffected =
-                    pstmt.executeUpdate();
-
-            return rowsAffected > 0;
+            return pstmt.executeUpdate() > 0;
 
         } catch (Exception e) {
 
             e.printStackTrace();
+            return false;
+        }
+    }
 
+    public boolean updateSeats(
+            Connection conn,
+            int eventId,
+            int newAvailableSeats
+    ) {
+
+        String query =
+                "UPDATE events " +
+                "SET available_seats = ? " +
+                "WHERE event_id = ?";
+
+        try {
+
+            PreparedStatement pstmt =
+                    conn.prepareStatement(query);
+
+            pstmt.setInt(1, newAvailableSeats);
+            pstmt.setInt(2, eventId);
+
+            return pstmt.executeUpdate() > 0;
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
             return false;
         }
     }
