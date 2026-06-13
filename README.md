@@ -1,4 +1,4 @@
-# 🎟️ EventHub
+# EventHub
 
 EventHub is a desktop-based event management system developed using Java Swing, JDBC, and MySQL. The application allows customers to browse events, book tickets, view booking history, and track transactions, while administrators can create and manage events through a separate dashboard.
 
@@ -6,7 +6,7 @@ The project follows a layered architecture using DAO and Service patterns and in
 
 ---
 
-## 🚀 Features
+## Features
 
 ### Customer Module
 
@@ -35,7 +35,7 @@ The project follows a layered architecture using DAO and Service patterns and in
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - Java
 - Java Swing
@@ -46,7 +46,7 @@ The project follows a layered architecture using DAO and Service patterns and in
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```text
 src
@@ -75,7 +75,7 @@ screenshots
 
 ---
 
-## 🏗️ Application Architecture
+## Application Architecture
 
 ```text
 Java Swing GUI
@@ -89,7 +89,7 @@ MySQL Database
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
 ### Login Screen
 
@@ -129,20 +129,24 @@ MySQL Database
 
 ---
 
-## 🗄️ Database Schema
+## Database Schema
 
 The application uses four relational tables:
 
 ### Users
+
 Stores customer and administrator accounts.
 
 ### Events
+
 Stores event details including ticket pricing and seat availability.
 
 ### Bookings
+
 Stores all ticket booking records.
 
 ### Transactions
+
 Stores payment and booking transaction history.
 
 The complete schema is available in:
@@ -151,7 +155,7 @@ The complete schema is available in:
 
 ---
 
-## 🔒 Concurrency Handling
+## Concurrency Handling
 
 During development, concurrent booking scenarios were tested to identify race conditions that could lead to overselling of tickets.
 
@@ -165,7 +169,7 @@ This ensures that only one transaction can reserve the final available seats at 
 
 ---
 
-## ▶️ How to Run
+## How to Run
 
 ### 1. Clone the Repository
 
@@ -212,7 +216,7 @@ src/Main.java
 
 ---
 
-## 👤 Sample Credentials
+## Sample Credentials
 
 ### Administrator
 
@@ -230,7 +234,7 @@ Password: 123
 
 ---
 
-## 🔮 Future Improvements
+## Future Improvements
 
 - Event Cancellation
 - Ticket Refund Workflow
@@ -240,7 +244,7 @@ Password: 123
 
 ---
 
-## 👨‍💻 Author
+## Author
 
 **Garvit Budania**
 
